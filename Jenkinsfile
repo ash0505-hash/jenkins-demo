@@ -3,45 +3,33 @@ pipeline {
     agent any
 
     stages {
-        stage('Checkout') {
+        stage('Check Server') {
             steps {
-<<<<<<< HEAD
-                echo 'GitHub code checkout'
-=======
-                echo 'Downloading code from GitHub'
->>>>>>> f39bb72ca28e667bcf4cc66d847346753f7c7da4
+                sh 'hostname'
+                sh 'whoami'
+                sh 'date'
+                sh 'pwd'
             }
         }
 
-        stage('Build') {
+        stage('Create File') {
             steps {
-<<<<<<< HEAD
-                echo 'Building application'
-                bat 'echo Build successful'
-=======
-                echo 'Application Build Started'
->>>>>>> f39bb72ca28e667bcf4cc66d847346753f7c7da4
+                sh 'mkdir -p devops'
+                sh 'touch devops/hello.txt'
+                sh 'ls -l devops'
             }
         }
 
-        stage('Test') {
+        stage('Verify File') {
             steps {
-<<<<<<< HEAD
-                echo 'Testing application'
-                bat 'echo All tests passed'
-=======
-                echo 'Application Testing Started'
->>>>>>> f39bb72ca28e667bcf4cc66d847346753f7c7da4
-            }
-        }
-
-        stage('Deploy') {
-            steps {
-<<<<<<< HEAD
-                echo 'Deploying application'
-=======
-                echo 'Application Deployment Started'
->>>>>>> f39bb72ca28e667bcf4cc66d847346753f7c7da4
+                sh '''
+                    if [ -f devops/hello.txt ]; then
+                        echo "SUCCESS: File created!"
+                    else
+                        echo "ERROR: File not found"
+                        exit 1
+                    fi
+                '''
             }
         }
     }
